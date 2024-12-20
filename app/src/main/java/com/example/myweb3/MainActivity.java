@@ -1,38 +1,42 @@
 package com.example.myweb3;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.webkit.WebResourceError;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    String[] sites = { "Бурдж-Халифа", "Башня свободы", "Шанхайская башня", "Бурдж-эль-Араб", "Башни Петронас"};
-  //  TextView selection=findViewById(R.id.textView);
-
+    WebView webV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Spinner spin=findViewById(R.id.spinner);
-        WebView webV=findViewById(R.id.Web);
+        webV = findViewById(R.id.Web);
+
         webV.getSettings().setJavaScriptEnabled(true);
+        webV.getSettings().setDomStorageEnabled(true);
+        webV.getSettings().setDatabaseEnabled(true);
+        webV.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        webV.getSettings().setAllowFileAccess(true);
+        webV.getSettings().setSupportZoom(true);
+        webV.getSettings().setBuiltInZoomControls(true);
+        webV.getSettings().setDisplayZoomControls(false);
+        webV.getSettings().setLoadWithOverviewMode(true); // Для адаптации к экрану
+        webV.getSettings().setUseWideViewPort(true);
 
         WebViewClient webViewClient=new WebViewClient() {
-            @SuppressWarnings("deprecation") @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                Toast.makeText(getApplicationContext(), "Ошибка загрузки: " + error.getDescription(), Toast.LENGTH_SHORT).show();
             }
 
             @TargetApi(Build.VERSION_CODES.N) @Override
@@ -42,28 +46,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
         };
+
         webV.setWebViewClient(webViewClient);
 
-        ArrayAdapter<String> adapter=new ArrayAdapter(this, android.R.layout.simple_spinner_item,sites);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spin.setAdapter(adapter);
-        AdapterView.OnItemSelectedListener itemSelectedListener=new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-              String item=(String) adapterView.getItemAtPosition(i);
-
-              if (i==0) webV.loadUrl("https://wikiway.com/oae/dubay/neboskreb-burdzh-khalifa/");
-              if (i==1) webV.loadUrl("https://wikiway.com/usa/new-york/bashnya-svobody/");
-              if (i==2) webV.loadUrl("https://www.s-vfu.ru/");
-              if (i==3) webV.loadUrl("https://eios.s-vfu.ru");
-              if (i==4) webV.loadUrl("https://developer.android.com/develop/ui/views/layout/webapps/webview?hl=ru");
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-        };
-        spin.setOnItemSelectedListener(itemSelectedListener);
+        webV.loadUrl("https://eios.s-vfu.ru/WebApp/#/Rasp");
     }
+
+    @Override
+    public void onBackPressed() {
+        if (webV.canGoBack()) {
+            webV.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }

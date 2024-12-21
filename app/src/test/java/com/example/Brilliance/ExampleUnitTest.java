@@ -1,4 +1,4 @@
-package com.example.myweb3;
+package com.example.Brilliance;
 
 import org.junit.Test;
 

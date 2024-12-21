@@ -1,8 +1,12 @@
-package com.example.myweb3;
+package com.example.Brilliance;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.annotation.TargetApi;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebResourceRequest;
@@ -12,8 +16,20 @@ import android.webkit.WebViewClient;
 import android.webkit.WebResourceError;
 import android.widget.Toast;
 
+
+
 public class MainActivity extends AppCompatActivity {
     WebView webV;
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         webV.getSettings().setSupportZoom(true);
         webV.getSettings().setBuiltInZoomControls(true);
         webV.getSettings().setDisplayZoomControls(false);
-        webV.getSettings().setLoadWithOverviewMode(true); // Для адаптации к экрану
+        webV.getSettings().setLoadWithOverviewMode(true);
         webV.getSettings().setUseWideViewPort(true);
 
         WebViewClient webViewClient=new WebViewClient() {
@@ -47,16 +63,26 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        webV.setWebViewClient(webViewClient);
+        if(isOnline()){
+            Toast.makeText(getApplicationContext(), "INTERNET ESTTTT!!!!", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "INTERNET NEEEET!!!!", Toast.LENGTH_SHORT).show();
+        }
 
+        webV.setWebViewClient(webViewClient);
         webV.loadUrl("https://eios.s-vfu.ru/WebApp/#/Rasp");
+
+
     }
 
     @Override
     public void onBackPressed() {
         if (webV.canGoBack()) {
+            //Intent intent = new Intent(this, SettingsActivity.class);
+            //startActivity(intent);
+
             webV.goBack();
-        } else {
+        }else{
             super.onBackPressed();
         }
     }

@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace 'com.example.myweb3'
+    namespace 'com.example.Brilliance'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.myweb3"
-        minSdk 24
+        applicationId "com.example.Brilliance"
+        minSdk 25
         targetSdk 33
         versionCode 1
         versionName "1.0"

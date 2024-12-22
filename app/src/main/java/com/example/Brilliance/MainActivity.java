@@ -26,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
     WebView webV;
     View view;
     PopupMenu popupMenu;
-    Intent intent;
-
+    Intent intent_settings;
+    Intent intent_notes;
+    Intent intent_about;
 
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -44,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         webV = findViewById(R.id.Web);
-        intent = new Intent(this, SettingsActivity.class);
-
+        intent_settings = new Intent(this, SettingsActivity.class);
+        intent_about = new Intent(this, AboutActivity.class);
+        intent_notes = new Intent(this, NotesActivity.class);
 
         webV.getSettings().setJavaScriptEnabled(true);
         webV.getSettings().setDomStorageEnabled(true);
@@ -118,9 +120,13 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.settings:
-                        startActivity(intent);
+                        startActivity(intent_settings);
                         return true;
                     case R.id.notes:
+                        startActivity(intent_notes);
+                        return true;
+                    case R.id.about:
+                        startActivity(intent_about);
                         return true;
                     default:
                         return false;

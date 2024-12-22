@@ -8,9 +8,9 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
+        style="@style/MyActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"

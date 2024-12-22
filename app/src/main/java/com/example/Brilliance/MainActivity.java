@@ -1,6 +1,8 @@
 package com.example.Brilliance;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +11,8 @@ import android.annotation.TargetApi;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
@@ -20,6 +24,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     WebView webV;
+    View view;
+    PopupMenu popupMenu;
+    Intent intent;
+
 
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -36,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         webV = findViewById(R.id.Web);
+        intent = new Intent(this, SettingsActivity.class);
+
 
         webV.getSettings().setJavaScriptEnabled(true);
         webV.getSettings().setDomStorageEnabled(true);
@@ -64,27 +74,62 @@ public class MainActivity extends AppCompatActivity {
         };
 
         if(isOnline()){
-            Toast.makeText(getApplicationContext(), "INTERNET ESTTTT!!!!", Toast.LENGTH_SHORT).show();
+            //yes
         }else{
-            Toast.makeText(getApplicationContext(), "INTERNET NEEEET!!!!", Toast.LENGTH_SHORT).show();
+           //no
         }
 
         webV.setWebViewClient(webViewClient);
         webV.loadUrl("https://eios.s-vfu.ru/WebApp/#/Rasp");
 
+        Toolbar toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
     }
 
     @Override
     public void onBackPressed() {
         if (webV.canGoBack()) {
-            //Intent intent = new Intent(this, SettingsActivity.class);
-            //startActivity(intent);
-
             webV.goBack();
         }else{
             super.onBackPressed();
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            showPopupMenu();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showPopupMenu() {
+        view = findViewById(R.id.toolbar2);
+        popupMenu = new PopupMenu(this, view);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.settings:
+                        startActivity(intent);
+                        return true;
+                    case R.id.notes:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        popupMenu.show();
+    }
+
+
 
 }

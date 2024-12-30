@@ -7,9 +7,9 @@
 
     <View
         android:id="@+id/view"
+        style="@style/CustomViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="@color/dark_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -19,11 +19,10 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar4"
-        style="@style/MyActionBar"
+        style="@style/ActionBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,6 +32,7 @@
 
     <EditText
         android:id="@+id/editText"
+        style="@style/NormalText"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="5dp"
@@ -45,7 +45,6 @@
         android:gravity="start|top"
         android:hint="Напиши..."
         android:inputType="textMultiLine"
-        android:textAppearance="@style/NormalText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

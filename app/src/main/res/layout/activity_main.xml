@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        style="@style/MyActionBar"
+        style="@style/ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/baseline_menu_24"
         app:title="@string/app_name"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
-
 
     <WebView
         android:id="@+id/Web"

@@ -1,11 +1,13 @@
 package com.example.Brilliance;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.annotation.TargetApi;
 import android.net.NetworkInfo;
@@ -43,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        if(sharedPreferences.getBoolean("nightMode", false)){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         setContentView(R.layout.activity_main);
         webV = findViewById(R.id.Web);
         intent_settings = new Intent(this, SettingsActivity.class);
@@ -52,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         webV.getSettings().setJavaScriptEnabled(true);
         webV.getSettings().setDomStorageEnabled(true);
         webV.getSettings().setDatabaseEnabled(true);
-        webV.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         webV.getSettings().setAllowFileAccess(true);
         webV.getSettings().setSupportZoom(true);
         webV.getSettings().setBuiltInZoomControls(true);
@@ -60,11 +67,20 @@ public class MainActivity extends AppCompatActivity {
         webV.getSettings().setLoadWithOverviewMode(true);
         webV.getSettings().setUseWideViewPort(true);
 
+
+        if(sharedPreferences.getBoolean("cacheSaving", false)){
+            webV.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        }else{
+            webV.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+            webV.clearCache(true);
+        }
+
+
         WebViewClient webViewClient=new WebViewClient() {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                Toast.makeText(getApplicationContext(), "Ошибка загрузки: " + error.getDescription(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Ошибка загрузки: " + error.getDescription(), Toast.LENGTH_SHORT).show();
             }
 
             @TargetApi(Build.VERSION_CODES.N) @Override
@@ -74,12 +90,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         };
-
-        if(isOnline()){
-            //yes
-        }else{
-           //no
-        }
 
         webV.setWebViewClient(webViewClient);
         webV.loadUrl("https://eios.s-vfu.ru/WebApp/#/Rasp");

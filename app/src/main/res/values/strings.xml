@@ -3,7 +3,7 @@
     <string name="settings">Настройки</string>
     <string name="notes">Заметки</string>
     <string name="about">О приложении</string>
-    <string name="nightdaystyle">Ночной/дневной режим</string>
+    <string name="nightdaystyle">Дневной/ночной режим</string>
     <string name="save_cache">Сохранять кэш</string>
     <string name="Notifications">Уведомления:</string>
     <string name="RemindAt">Напоминать о\nпервой паре в:</string>

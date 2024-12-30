@@ -24,11 +24,9 @@ public class NotesActivity extends AppCompatActivity {
 
         editText = findViewById(R.id.editText);
 
-        // Загружаем сохранённый текст из SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        String savedText = sharedPreferences.getString("savedText", ""); // "" - значение по умолчанию, если текст не сохранён
+        String savedText = sharedPreferences.getString("savedText", "");
 
-        // Устанавливаем загруженный текст в EditText
         editText.setText(savedText);
 
     }
@@ -47,10 +45,8 @@ public class NotesActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        // Получаем текст из EditText
         String text = editText.getText().toString();
 
-        // Сохраняем текст в SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("savedText", text);

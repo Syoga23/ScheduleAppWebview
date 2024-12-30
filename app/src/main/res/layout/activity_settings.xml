@@ -7,7 +7,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/MyActionBar"
+        style="@style/ActionBar"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -21,9 +21,9 @@
 
     <View
         android:id="@+id/view2"
+        style="@style/CustomViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="@color/dark_200"
         android:theme="@style/Theme.MyWeb3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,23 +41,22 @@
 
         <Switch
             android:id="@+id/switch1"
+            style="@style/SwitchStyle"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:gravity="center|right"
+            android:switchTextAppearance="@style/NormalText"
             android:text="@string/nightdaystyle"
-            android:textAppearance="@style/NormalText"
-            android:textColor="@color/white" />
+            android:textAppearance="@style/NormalText" />
 
         <CheckBox
             android:id="@+id/checkBox2"
+            style="@style/CheckboxStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:buttonTint="@color/white"
-            android:text="@string/save_cache"
-            android:textAppearance="@style/NormalText"
-            android:textColor="@color/white" />
+            android:text="@string/save_cache" />
 
         <TextView
             android:id="@+id/textView2"
